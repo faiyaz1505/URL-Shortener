@@ -8,16 +8,15 @@ import java.util.Base64;
 public class HashUtil {
 
     public static String generateShortCode(String url) {
-
-        MessageDigest md = null;
         try {
-            md = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        byte[] hash =md.digest(url.getBytes(StandardCharsets.UTF_8));
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash =md.digest(url.getBytes(StandardCharsets.UTF_8));
 
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(hash).substring(0, 6);
+            return Base64.getUrlEncoder().withoutPadding().encodeToString(hash).substring(0, 6);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error generating hash");
+        }
+
 
     }
 }
