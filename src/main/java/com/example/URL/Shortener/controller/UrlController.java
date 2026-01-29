@@ -27,7 +27,7 @@ public class UrlController {
 
 
     @GetMapping("/{code}")
-    public ResponseEntity<Void> redirect(@PathVariable String code) {
+    public ResponseEntity<Void> redirect (@PathVariable String code) {
         String url = urlService.getOriginalUrl(code);
 
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -36,7 +36,7 @@ public class UrlController {
     }
 
     @GetMapping("/metrics")
-    public Map<String, Integer> metrics() {
+    public Map<String, Integer> metrics() throws Exception {
         return urlService.topDomains();
     }
 }

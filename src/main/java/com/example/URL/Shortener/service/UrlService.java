@@ -49,7 +49,10 @@ public class UrlService {
         return url;
     }
 
-    public Map<String, Integer> topDomains() {
+    public Map<String, Integer> topDomains() throws Exception {
+        if(repo.getDomainCount().isEmpty()){
+            throw new Exception("No record found");
+        }
         return repo.getDomainCount().entrySet().stream()
                 .sorted((a, b) -> b.getValue().compareTo(a.getValue())).limit(3)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,

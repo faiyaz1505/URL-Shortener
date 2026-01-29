@@ -35,7 +35,7 @@ class UrlShortenerApplicationTests {
 	}
 
 	@Test
-	void domainCountShouldIncreaseWhenUrlIsShortened() {
+	void domainCountShouldIncreaseWhenUrlIsShortened() throws Exception {
 		service.shortenUrl("https://yahoo.com/search");
 		service.shortenUrl("https://yahoo.com/maps");
 		service.shortenUrl("https://github.com/watch");
