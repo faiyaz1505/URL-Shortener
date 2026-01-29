@@ -1,21 +1,16 @@
 package com.example.URL.Shortener.service;
 
 
-import com.example.URL.Shortener.model.ShortenRequest;
 import com.example.URL.Shortener.repository.InMemoryStorage;
 import com.example.URL.Shortener.util.HashUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-
-import java.net.URI;
 
 @Service
-public class UrlShortenerService{
+public class UrlService {
 
     private final InMemoryStorage repo;
 
-    public UrlShortenerService(InMemoryStorage repo){
+    public UrlService(InMemoryStorage repo){
         this.repo =repo;
     }
     public String shortenUrl(String url){
@@ -26,6 +21,15 @@ public class UrlShortenerService{
             System.out.println(repo.getCodeToUrl());
             return code;
         });
+    }
+
+
+    public String getOriginalUrl(String code) {
+        String url=repo.getCodeToUrl().get(code);
+        if(url==null){
+            throw new RuntimeException("No Record found");
+        }
+        return url;
     }
 
 }

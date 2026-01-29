@@ -2,17 +2,19 @@ package com.example.URL.Shortener.controller;
 
 
 import com.example.URL.Shortener.model.ShortenRequest;
-import com.example.URL.Shortener.service.UrlShortenerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.URL.Shortener.service.UrlService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 public class UrlController {
 
-    private final UrlShortenerService urlService;
+    private final UrlService urlService;
 
-    public UrlController(UrlShortenerService urlService) {
+    public UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
 
@@ -20,5 +22,15 @@ public class UrlController {
     public String shorten(@RequestBody ShortenRequest request) {
         String code = urlService.shortenUrl(request.getUrl());
         return "http://localhost:8080/" + code;
+    }
+
+
+    @GetMapping("/{code}")
+    public ResponseEntity<Void> redirect(@PathVariable String code) {
+        String url = urlService.getOriginalUrl(code);
+
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create(url))
+                .build();
     }
 }
