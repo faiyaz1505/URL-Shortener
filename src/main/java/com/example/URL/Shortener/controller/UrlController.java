@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Map;
 
 @RestController
 public class UrlController {
@@ -32,5 +33,10 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(url))
                 .build();
+    }
+
+    @GetMapping("/metrics")
+    public Map<String, Integer> metrics() {
+        return urlService.topDomains();
     }
 }

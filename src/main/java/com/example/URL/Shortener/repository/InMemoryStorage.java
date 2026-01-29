@@ -14,12 +14,16 @@ public class InMemoryStorage {
 
     private final Map<String, String> urlToCode =new ConcurrentHashMap<>();
     private final Map<String, String> codeToUrl =new ConcurrentHashMap<>();
+    private final Map<String, Integer> domainCount=new ConcurrentHashMap<>();
 
     public Map<String,String> getUrlToCode(){
         return urlToCode;
     }
     public Map<String,String> getCodeToUrl(){
         return codeToUrl;
+    }
+    public Map<String,Integer> getDomainCount(){
+        return domainCount;
     }
 
 

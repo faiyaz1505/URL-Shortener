@@ -5,17 +5,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
 class UrlShortenerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+
 	@Autowired
 	UrlService service;
+
 
 	@Test
 	void sameUrlReturnsSameShortCode() {
@@ -33,4 +34,15 @@ class UrlShortenerApplicationTests {
 		assertNotEquals(url,url2);
 	}
 
+	@Test
+	void domainCountShouldIncreaseWhenUrlIsShortened() {
+		service.shortenUrl("https://yahoo.com/search");
+		service.shortenUrl("https://yahoo.com/maps");
+		service.shortenUrl("https://github.com/watch");
+
+		Map<String, Integer> topDomains = service.topDomains();
+
+		assertEquals(2, topDomains.get("yahoo.com"));
+		assertEquals(1, topDomains.get("github.com"));
+	}
 }
